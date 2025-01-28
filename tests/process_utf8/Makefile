@@ -22,12 +22,21 @@
 # -----------------------------------------------------------------------
 
 
+
+CMD := echo
+UTF8_ALIAS := 📢
+
+CMD_PATH := $(shell IFS=:; for dir in $$PATH; do \
+    if [ -x "$$dir/$(CMD)" ]; then echo "$$dir/$(CMD)"; exit 0; fi; \
+done; echo "not found")
+
 export PATH := $(PATH):$(shell pwd)
 
 all: echo_symlink
 
 echo_symlink:
-	ln -s $(shell which echo) "📢"
+	ln -s $(CMD_PATH) $(UTF8_ALIAS)
+	echo "created symbolic link: $(UTF8_ALIAS) -> $(CMD_PATH)"
 
 override NAME = process_utf8
 include ../simple.mk
