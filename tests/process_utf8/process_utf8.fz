@@ -56,7 +56,7 @@ process_utf8 =>
           say ((io.buffered lm).read_string 1E9).val
 
   test "unicode in executable name" ()->
-    (os.process.start "📢" ["this was printed by calling 📢, a symlink to echo"]).bind unit p->
+    (os.process.start "ｉｆ" []).bind unit p->
       say p.wait
       _ := lm ! ()->
         _ := p.with_out unit lm ()->

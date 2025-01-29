@@ -8,5 +8,5 @@
 
 ===  Test: unicode in executable name  ===
 0
-this was printed by calling 📢, a symlink to echo
+Fuzion says «Ⓗⓔⓛⓛⓞ».
 
