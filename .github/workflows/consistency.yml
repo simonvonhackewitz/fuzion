@@ -33,10 +33,6 @@ permissions:
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'main'
-  pull_request: {}
 
 env:
   PRECONDITIONS: true
