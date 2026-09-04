@@ -156,7 +156,7 @@ public class Lexer extends SourceFile
                    //   x is $'   in
                    // '"""
                    //   x is $x."""'
-    t_stringQB,    // '"a+b is $(' in "a+b is $(a+b)."
+    t_stringQP,    // '"a+b is $(' in "a+b is $(a+b)."
                    // OR multiline string
                    // '"""
                    //   a+b is $(' in
@@ -166,12 +166,12 @@ public class Lexer extends SourceFile
                    //     ^--- fat quotations (""") instead of single
                    //          quotation if part of multiline string
     t_StringDD,    // '+-*$'      in "abc$x+-*$x.".
-    t_StringDB,    // '+-*$('     in "abc$x+-*$(a+b)."
+    t_StringDP,    // '+-*$('     in "abc$x+-*$(a+b)."
     t_stringPQ,    // ')+-*"'     in "abc$(x)+-*"
                    //      ^--- fat quotations (""") instead of single
                    //           quotation if part of multiline string
     t_stringPD,    // ')+-*$'     in "abc$(x)+-*$x.".
-    t_stringPB,    // ')+-*$('    in "abc$(x)+-*$(a+b)."
+    t_stringPP,    // ')+-*$('    in "abc$(x)+-*$(a+b)."
     t_this("this"),
     t_env("env"),
     t_check("check"),
@@ -324,13 +324,13 @@ public class Lexer extends SourceFile
               case t_ident      -> "identifier";
               case t_stringQQ   -> "string constant";
               case t_stringQD   -> "string constant ending in $";
-              case t_stringQB   -> "string constant ending in $(";
+              case t_stringQP   -> "string constant ending in $(";
               case t_StringDQ   -> "string constant after $<id>";
               case t_StringDD   -> "string constant after $<id> ending in $";
-              case t_StringDB   -> "string constant after $<id> ending in $(";
+              case t_StringDP   -> "string constant after $<id> ending in $(";
               case t_stringPQ   -> "string constant after $(<expr>)";
               case t_stringPD   -> "string constant after $(<expr>) ending in $";
-              case t_stringPB   -> "string constant after $(<expr>) ending in $(";
+              case t_stringPP   -> "string constant after $(<expr>) ending in $(";
               case t_eof        -> "end-of-file";
               default           -> super.toString();
           };
@@ -2970,13 +2970,13 @@ PIPE        : "|"
     {
       if      (this == StringEnd.QUOTE  && end == StringEnd.QUOTE ) { return Token.t_stringQQ; }
       else if (this == StringEnd.QUOTE  && end == StringEnd.DOLLAR) { return Token.t_stringQD; }
-      else if (this == StringEnd.QUOTE  && end == StringEnd.PAREN ) { return Token.t_stringQB; }
+      else if (this == StringEnd.QUOTE  && end == StringEnd.PAREN ) { return Token.t_stringQP; }
       else if (this == StringEnd.DOLLAR && end == StringEnd.QUOTE ) { return Token.t_StringDQ; }
       else if (this == StringEnd.DOLLAR && end == StringEnd.DOLLAR) { return Token.t_StringDD; }
-      else if (this == StringEnd.DOLLAR && end == StringEnd.PAREN ) { return Token.t_StringDB; }
+      else if (this == StringEnd.DOLLAR && end == StringEnd.PAREN ) { return Token.t_StringDP; }
       else if (this == StringEnd.PAREN  && end == StringEnd.QUOTE ) { return Token.t_stringPQ; }
       else if (this == StringEnd.PAREN  && end == StringEnd.DOLLAR) { return Token.t_stringPD; }
-      else if (this == StringEnd.PAREN  && end == StringEnd.PAREN ) { return Token.t_stringPB; }
+      else if (this == StringEnd.PAREN  && end == StringEnd.PAREN ) { return Token.t_stringPP; }
       throw new Error("impossible StringEnd.token combination "+this+" and "+end);
     }
   }
@@ -2995,13 +2995,13 @@ PIPE        : "|"
       {
       case t_stringQQ:
       case t_stringQD:
-      case t_stringQB: return StringEnd.QUOTE;
+      case t_stringQP: return StringEnd.QUOTE;
       case t_StringDQ:
       case t_StringDD:
-      case t_StringDB: return StringEnd.DOLLAR;
+      case t_StringDP: return StringEnd.DOLLAR;
       case t_stringPQ:
       case t_stringPD:
-      case t_stringPB: return StringEnd.PAREN;
+      case t_stringPP: return StringEnd.PAREN;
       default        : throw new Error();
 
       }
@@ -3025,9 +3025,9 @@ PIPE        : "|"
       case t_stringQD:
       case t_StringDD:
       case t_stringPD: return StringEnd.DOLLAR;
-      case t_stringQB:
-      case t_StringDB:
-      case t_stringPB: return StringEnd.PAREN;
+      case t_stringQP:
+      case t_StringDP:
+      case t_stringPP: return StringEnd.PAREN;
       default        : throw new Error();
 
       }
@@ -3527,13 +3527,13 @@ PIPE        : "|"
       {
       case t_stringQQ:
       case t_stringQD:
-      case t_stringQB:
+      case t_stringQP:
       case t_StringDQ:
       case t_StringDD:
-      case t_StringDB:
+      case t_StringDP:
       case t_stringPQ:
       case t_stringPD:
-      case t_stringPB: return true;
+      case t_stringPP: return true;
       default        : return false;
       }
   }

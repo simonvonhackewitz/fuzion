@@ -79,8 +79,8 @@ public class SemanticToken extends ANY
                 t.text().substring(1), Token.t_stringQQ));
           case t_stringQD :    // '"x is $' in "x is $x.".
           case t_StringDD :    // '+-*$' in "abc$x+-*$x.".
-          case t_stringQB :    // '"a+b is $(' in "a+b is $(a+b)."
-          case t_StringDB :    // '+-*$(' in "abc$x+-*$(a+b)."
+          case t_stringQP :    // '"a+b is $(' in "a+b is $(a+b)."
+          case t_StringDP :    // '+-*$(' in "abc$x+-*$(a+b)."
             return Stream.of(
               new TokenInfo(t.start(),
                 SourcePositionTool.byLineColumn(t.end()._sourceFile, t.end().line(),
@@ -92,7 +92,7 @@ public class SemanticToken extends ANY
                 t.end(),
                 t.text().substring(Util.charCount(t.text()) - 1, Util.charCount(t.text())), Token.t_op));
           case t_stringPD :    // ')+-*$' in "abc$(x)+-*$x.".
-          case t_stringPB :    // ')+-*$(' in "abc$(x)+-*$(a+b)."
+          case t_stringPP :    // ')+-*$(' in "abc$(x)+-*$(a+b)."
             return Stream.of(
               new TokenInfo(t.start(), LexerTool.goRight(t.start()), ")",
                 Token.t_op),
