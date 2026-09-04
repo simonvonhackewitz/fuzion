@@ -78,9 +78,9 @@ public class SemanticToken extends ANY
                 t.end(),
                 t.text().substring(1), Token.t_stringQQ));
           case t_stringQD :    // '"x is $' in "x is $x.".
-          case t_StringDD :    // '+-*$' in "abc$x+-*$x.".
+          case t_stringDD :    // '+-*$' in "abc$x+-*$x.".
           case t_stringQP :    // '"a+b is $(' in "a+b is $(a+b)."
-          case t_StringDP :    // '+-*$(' in "abc$x+-*$(a+b)."
+          case t_stringDP :    // '+-*$(' in "abc$x+-*$(a+b)."
             return Stream.of(
               new TokenInfo(t.start(),
                 SourcePositionTool.byLineColumn(t.end()._sourceFile, t.end().line(),

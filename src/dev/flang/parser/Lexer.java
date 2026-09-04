@@ -162,11 +162,11 @@ public class Lexer extends SourceFile
                    //   a+b is $(' in
                    // '"""
                    //   a+b is $(a+b)."""'
-    t_StringDQ,    // '+-*"'      in "abc$x+-*"
+    t_stringDQ,    // '+-*"'      in "abc$x+-*"
                    //     ^--- fat quotations (""") instead of single
                    //          quotation if part of multiline string
-    t_StringDD,    // '+-*$'      in "abc$x+-*$x.".
-    t_StringDP,    // '+-*$('     in "abc$x+-*$(a+b)."
+    t_stringDD,    // '+-*$'      in "abc$x+-*$x.".
+    t_stringDP,    // '+-*$('     in "abc$x+-*$(a+b)."
     t_stringPQ,    // ')+-*"'     in "abc$(x)+-*"
                    //      ^--- fat quotations (""") instead of single
                    //           quotation if part of multiline string
@@ -325,9 +325,9 @@ public class Lexer extends SourceFile
               case t_stringQQ   -> "string constant";
               case t_stringQD   -> "string constant ending in $";
               case t_stringQP   -> "string constant ending in $(";
-              case t_StringDQ   -> "string constant after $<id>";
-              case t_StringDD   -> "string constant after $<id> ending in $";
-              case t_StringDP   -> "string constant after $<id> ending in $(";
+              case t_stringDQ   -> "string constant after $<id>";
+              case t_stringDD   -> "string constant after $<id> ending in $";
+              case t_stringDP   -> "string constant after $<id> ending in $(";
               case t_stringPQ   -> "string constant after $(<expr>)";
               case t_stringPD   -> "string constant after $(<expr>) ending in $";
               case t_stringPP   -> "string constant after $(<expr>) ending in $(";
@@ -2971,9 +2971,9 @@ PIPE        : "|"
       if      (this == StringEnd.QUOTE  && end == StringEnd.QUOTE ) { return Token.t_stringQQ; }
       else if (this == StringEnd.QUOTE  && end == StringEnd.DOLLAR) { return Token.t_stringQD; }
       else if (this == StringEnd.QUOTE  && end == StringEnd.PAREN ) { return Token.t_stringQP; }
-      else if (this == StringEnd.DOLLAR && end == StringEnd.QUOTE ) { return Token.t_StringDQ; }
-      else if (this == StringEnd.DOLLAR && end == StringEnd.DOLLAR) { return Token.t_StringDD; }
-      else if (this == StringEnd.DOLLAR && end == StringEnd.PAREN ) { return Token.t_StringDP; }
+      else if (this == StringEnd.DOLLAR && end == StringEnd.QUOTE ) { return Token.t_stringDQ; }
+      else if (this == StringEnd.DOLLAR && end == StringEnd.DOLLAR) { return Token.t_stringDD; }
+      else if (this == StringEnd.DOLLAR && end == StringEnd.PAREN ) { return Token.t_stringDP; }
       else if (this == StringEnd.PAREN  && end == StringEnd.QUOTE ) { return Token.t_stringPQ; }
       else if (this == StringEnd.PAREN  && end == StringEnd.DOLLAR) { return Token.t_stringPD; }
       else if (this == StringEnd.PAREN  && end == StringEnd.PAREN ) { return Token.t_stringPP; }
@@ -2996,9 +2996,9 @@ PIPE        : "|"
       case t_stringQQ:
       case t_stringQD:
       case t_stringQP: return StringEnd.QUOTE;
-      case t_StringDQ:
-      case t_StringDD:
-      case t_StringDP: return StringEnd.DOLLAR;
+      case t_stringDQ:
+      case t_stringDD:
+      case t_stringDP: return StringEnd.DOLLAR;
       case t_stringPQ:
       case t_stringPD:
       case t_stringPP: return StringEnd.PAREN;
@@ -3020,13 +3020,13 @@ PIPE        : "|"
     switch (t)
       {
       case t_stringQQ:
-      case t_StringDQ:
+      case t_stringDQ:
       case t_stringPQ: return StringEnd.QUOTE;
       case t_stringQD:
-      case t_StringDD:
+      case t_stringDD:
       case t_stringPD: return StringEnd.DOLLAR;
       case t_stringQP:
-      case t_StringDP:
+      case t_stringDP:
       case t_stringPP: return StringEnd.PAREN;
       default        : throw new Error();
 
@@ -3528,9 +3528,9 @@ PIPE        : "|"
       case t_stringQQ:
       case t_stringQD:
       case t_stringQP:
-      case t_StringDQ:
-      case t_StringDD:
-      case t_StringDP:
+      case t_stringDQ:
+      case t_stringDD:
+      case t_stringDP:
       case t_stringPQ:
       case t_stringPD:
       case t_stringPP: return true;
