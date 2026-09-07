@@ -356,14 +356,14 @@ public mutate : effect is
     #
     # For a reference type `T`, this operation will compare the internal representation
     # of the reference value, not the referenced value. In particular, this means that
-    # references that are typically equals like `id String "Hello!"` and
+    # references that are typically equal like `id String "Hello!"` and
     # `id String "Hello" + "!"` may be represented by distinct `String` reference
     # values.
     #
     # Check that the mutate effect this was created with is still
     # instated in the current environment.
     #
-    # Different kinds of mutate will make different efforts for synchronizatiion:
+    # Different kinds of mutate will make different efforts for synchronization:
     #
     #   - for a thread-local `mutate`, this can be used only by the thread that instated
     #     the `mutate`, no synchronization will be performed.
@@ -410,14 +410,14 @@ public mutate : effect is
     #
     # For a reference type `T`, this operation will compare the internal representation
     # of the reference value, not the referenced value. In particular, this means that
-    # references that are typically equals like `id String "Hello!"` and
+    # references that are typically equal like `id String "Hello!"` and
     # `id String "Hello" + "!"` may be represented by distinct `String` reference
     # values.
     #
     # Check that the mutate effect this was created with is still
     # instated in the current environment.
     #
-    # Different kinds of mutate will make different efforts for synchronizatiion:
+    # Different kinds of mutate will make different efforts for synchronization:
     #
     #   - for a thread-local `mutate`, this can be used only by the thread that instated
     #     the `mutate`, no synchronization will be performed.
@@ -490,7 +490,7 @@ public mutate : effect is
 
     # update mutable field using a function of the old value
     #
-    # Different kinds of mutate will make different efforts for synchronizatiion:
+    # Different kinds of mutate will make different efforts for synchronization:
     #
     #   - for a thread-local `mutate`, this can be used only by the thread that instated
     #     the `mutate`, no synchronization will be performed.
@@ -498,7 +498,7 @@ public mutate : effect is
     #   - for a `concur.blocking_mutate`/`concur.blocking_mutate_using_clock`, this will
     #     use `exclusive` to ensure atomicity
     #
-    #   - for a `atomic_mutate`, this will use a loop that perofroms `compare_and_swap`
+    #   - for a `atomic_mutate`, this will use a loop that performs `compare_and_swap`
     #     repeatedly until the update was successful.
     #
     public update
@@ -609,7 +609,7 @@ public mutate : effect is
   #
   # When no other synchronization mechanism is used, this is required between reads
   # of fields that are accessed by concurrent threads to ensure that the order seen
-  # by the reading thread corresponds to the syntacticyl order the reads are
+  # by the reading thread corresponds to the syntactical order the reads are
   # performed in.
   #
   public read_fence unit
@@ -623,7 +623,7 @@ public mutate : effect is
   #
   # When no other synchronization mechanism is used, this is required between writes
   # of fields that are accessed by concurrent threads to ensure that the order seen
-  # by the reading thread corresponds to the syntactiyl order the writes were
+  # by the reading thread corresponds to the syntactical order the writes were
   # performed in.
   #
   public write_fence unit

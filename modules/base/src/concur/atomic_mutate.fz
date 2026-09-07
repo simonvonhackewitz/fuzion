@@ -32,7 +32,7 @@
 # an internal global lock is used instead to ensure these accesses are
 # atomic.
 #
-# Read accesses usng `get` are protected from reusing outdated values
+# Read accesses using `get` are protected from reusing outdated values
 # by a `read_fence` while Write accesses using `put` include a `write_fence`
 # after writing the value to ensure the write is not delayed after any
 # subsequent writes.
