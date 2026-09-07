@@ -34,23 +34,18 @@ public switch(A type, B type /* NYI: B should be open generic */)
     property.orderable
 is
 
-  # NYI: CLEANUP: decide name: exists/ok, get/val?
-
   # Does this switch contain a value of type A?
   #
-  public exists bool =>
-    switch.this ? A => true
-                | B => false
+  public ok bool =>
+    match switch.this
+      A => true
+      B => false
 
 
-  # Does this switch contain a value of type A?
+  # shorthand postfix operator for 'ok'
+  # NYI: UNDER DEVELOPMENT: rename to just one question mark
   #
-  public ok bool => exists
-
-
-  # shorthand postfix operator for 'exists'
-  #
-  public postfix ?? bool => exists
+  public postfix ?? bool => ok
 
 
   # shorthand postfix operator for 'or_panic'
@@ -58,9 +53,17 @@ is
   public postfix ! A ! panic => or_panic
 
 
-  # shorthand prefix operator for '!exists'
+  # shorthand prefix operator for '!ok'
   #
-  public prefix ! bool => !exists
+  public prefix ! bool => !ok
+
+
+  # monadic operator for bool result, false for B
+  #
+  public infix >>? (f A -> bool) bool
+  =>
+    switch.this ? a A => f a
+                | _ B => false
 
 
   # value of a switch or default if switch contains B
@@ -124,7 +127,7 @@ is
 
 
   # converts switch into a list of either a single element in case
-  # switch.this.exists or `nil` otherwise
+  # switch.this.ok or `nil` otherwise
   #
   public redef as_list list A
   =>
@@ -145,7 +148,7 @@ is
   public as_outcome outcome A
   =>
     switch.this ? a A => a
-                | B => error "switch.as_outcome: no error message provided"
+                | B => error "converted to outcome from '$(switch.this.type.name)' with no error message provided"
 
 
   # convert this switch to an outcome
@@ -179,7 +182,7 @@ is
   # get A or panic with `B.as_string`
   #
   public or_panic A =>
-    or_panic b->"'switch.or_panic' called on '$(switch.this.type.name)' that is '$b'"
+    or_panic b->"'or_panic' called on '$(switch.this.type.name)' that is '$b'"
 
 
   # get A or panic with result of `msg`

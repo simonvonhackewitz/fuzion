@@ -17,26 +17,9 @@
 #
 #  Tokiwa Software GmbH, Germany
 #
-#  Source code of Fuzion standard library feature equatable
-#
-#  Author: Fridtjof Siebert (siebert@tokiwa.software)
+#  Source code of Fuzion test Makefile
 #
 # -----------------------------------------------------------------------
 
-# equatable -- feature for immutable values that define an equality relation
-#
-public equatable is
-
-
-  # equality implements the default equality relation for values of this type.
-  #
-  # This relation must be
-  #
-  #  - reflexive (equality a a),
-  #  - symmetric (equality a b = equality b a), and
-  #  - transitive ((equality a b && equality b c) : equality a c).
-  #
-  # result is true iff 'a' is considered to represent the same abstract value
-  # as 'b'.
-  #
-  public type.equality(a, b equatable.this) bool => abstract
+override NAME = reg_issue4119
+include ../simple.mk
