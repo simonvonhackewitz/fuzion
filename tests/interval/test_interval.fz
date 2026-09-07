@@ -34,12 +34,12 @@ test_interval is
         else
           s
       ) contained in size $(
-        if x.through.exists then
+        if x.through.ok then
           $(x.size)
         else
           "∞"
       ) first $(x.first) last $(x.last) reverse $(
-        if x.through.exists && x.first.exists && (0 -! x.step) then
+        if x.through.ok && x.first.ok && (0 -! x.step) then
           $(x.reverse_interval)
         else
           "n/a"
