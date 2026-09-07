@@ -245,7 +245,7 @@ private:public Doubly_Linked_List(
     LM.env.exclusive ()->
       for e := sentinel.next, e.next
       while !e.is_sentinel
-      until id T e.payload = elem then
+      until e.payload = elem then
         true
       else
         false
