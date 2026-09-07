@@ -396,6 +396,9 @@ public mutate : effect is
               put modified
             old
           else
+            # NYI: UNDER DEVELOPMENT: #7707 once we can move this code to redefined features in
+            # `atomic_mutate` and `blocking_mutate`, we should be able to use `compile_time_panic`
+            # here.
             panic "in $(mutate.this) used compare_and_swap on type '$(T)' that is not `property.equatable`"
 
 
