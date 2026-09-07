@@ -96,13 +96,13 @@ atomic_mutate_test =>
                                  _ := c.update u64->u64 (+1)
                             .catch s->
                                tm.env.exclusive ()->
-                                 if !error.exists
+                                 if !error
                                    error <- $s
 
       for
         start := time.Nano.env.read
         i := u64 1000, i+i
-      while tm.env.exclusive ()->(!error.exists)
+      while tm.env.exclusive ()->(!error)
         tm.env.exclusive ()->
           started <- 0
           error <- nil
@@ -110,7 +110,7 @@ atomic_mutate_test =>
         ta := array N _->(concur.Threads.env.spawn (()->count_threaded i))
         ta.for_each (.join.or_panic)
         end := time.Nano.env.read
-      until (end - start) >= sample_time && tm.env.exclusive ()->(!error.exists)
+      until (end - start) >= sample_time && tm.env.exclusive ()->(!error)
         say "multi threaded test for $M$(benchmark ? ", needed $((end-start).scale 1.0/i.as_f64) per update, $i samples in $(end-start)" : "")"
       else
         say "multi threaded test for $M, ERROR: $(tm.env.exclusive ()->error.get)"
@@ -154,13 +154,13 @@ atomic_mutate_test =>
                                  c.put_racy c.get_racy+1
                             .catch s->
                                tm.env.exclusive ()->
-                                 if !error.exists
+                                 if !error
                                    error <- $s
 
       for
         start := time.Nano.env.read
         i := u64 1000, i+i
-      while tm.env.exclusive ()->(!error.exists)
+      while tm.env.exclusive ()->(!error)
         tm.env.exclusive ()->
           started <- 0
           error <- nil
@@ -168,7 +168,7 @@ atomic_mutate_test =>
         ta := array N _->(concur.Threads.env.spawn (()->count_threaded i))
         ta.for_each (.join.or_panic)
         end := time.Nano.env.read
-      until (end - start) >= sample_time && tm.env.exclusive ()->(!error.exists)
+      until (end - start) >= sample_time && tm.env.exclusive ()->(!error)
         say "multi threaded racy test for $M$(benchmark ? ", needed $((end-start).scale 1.0/i.as_f64) per update, $i samples in $(end-start)" : "")"
       else
         say "multi threaded racy test for $M, ERROR: $(tm.env.exclusive ()->error.get)"
