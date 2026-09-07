@@ -33,23 +33,18 @@ public switch(A type, B type /* NYI: B should be open generic */)
     property.equatable
 is
 
-  # NYI: CLEANUP: decide name: exists/ok, get/val?
-
   # Does this switch contain a value of type A?
   #
-  public exists bool =>
-    switch.this ? A => true
-                | B => false
+  public ok bool =>
+    match switch.this
+      A => true
+      B => false
 
 
-  # Does this switch contain a value of type A?
+  # shorthand postfix operator for 'ok'
+  # NYI: UNDER DEVELOPMENT: rename to just one question mark
   #
-  public ok bool => exists
-
-
-  # shorthand postfix operator for 'exists'
-  #
-  public postfix ?? bool => exists
+  public postfix ?? bool => ok
 
 
   # shorthand postfix operator for 'or_panic'
@@ -57,9 +52,17 @@ is
   public postfix ! A ! panic => or_panic
 
 
-  # shorthand prefix operator for '!exists'
+  # shorthand prefix operator for '!ok'
   #
-  public prefix ! bool => !exists
+  public prefix ! bool => !ok
+
+
+  # monadic operator for bool result, false for B
+  #
+  public infix >>? (f A -> bool) bool
+  =>
+    switch.this ? a A => f a
+                | _ B => false
 
 
   # value of a switch or default if switch contains B
@@ -123,7 +126,7 @@ is
 
 
   # converts switch into a list of either a single element in case
-  # switch.this.exists or `nil` otherwise
+  # switch.this.ok or `nil` otherwise
   #
   public redef as_list list A
   =>
