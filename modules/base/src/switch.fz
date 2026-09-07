@@ -41,6 +41,12 @@ is
       B => false
 
 
+  # shorthand postfix operator for 'ok'
+  # NYI: UNDER DEVELOPMENT: rename to just one question mark
+  #
+  public postfix ?? bool => ok
+
+
   # shorthand postfix operator for 'or_panic'
   #
   public postfix ! A ! panic => or_panic
@@ -49,6 +55,14 @@ is
   # shorthand prefix operator for '!ok'
   #
   public prefix ! bool => !ok
+
+
+  # monadic operator for bool result, false for B
+  #
+  public infix >>? (f A -> bool) bool
+  =>
+    switch.this ? a A => f a
+                | _ B => false
 
 
   # value of a switch or default if switch contains B
