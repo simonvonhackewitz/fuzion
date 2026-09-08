@@ -1115,7 +1115,7 @@ returnType  : boundType
   /**
    * Parse effects
    *
-effects     : EXCLAMATION typeList
+effects     : EXCLAMATION boundTypeList
             |
             ;
 EXCLAMATION : "!"
@@ -1126,7 +1126,7 @@ EXCLAMATION : "!"
     var result = UnresolvedType.NONE;
     if (skip('!'))
       {
-        result = typeList();
+        result = boundTypeList();
       }
     return result;
   }
@@ -1521,6 +1521,26 @@ typeList    : type ( COMMA typeList
     while (skipComma())
       {
         result.add(type());
+      }
+    return result;
+  }
+
+
+
+  /**
+   * Parse boundTypeList
+   *
+boundTypeList : boundType ( COMMA boundTypeList
+                          |
+                          )
+             ;
+   */
+  List<AbstractType> boundTypeList()
+  {
+    List<AbstractType> result = new List<>(boundType());
+    while (skipComma())
+      {
+        result.add(boundType());
       }
     return result;
   }
