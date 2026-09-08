@@ -39,8 +39,7 @@ public blocking_mutate_using_clock(C type : time.Clock) : mutate is
 
   # mutex to be used for synchronization
   #
-  mtx := concur.sync.mutex.new.or_else
-            (panic "`concur.sync.mutex.new` failed to create mutex for `$(concur.blocking_mutate_using_clock.this.type)`")
+  mtx := concur.sync.mutex.new.or_panic
 
 
   # Threads that are currently blocked in `wait`
