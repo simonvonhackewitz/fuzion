@@ -32,7 +32,7 @@ reg_issue7379 =>
   #
   expected := "failed waiting for [sleep, 1m]"
 
-  for stdin_file in [option (os.cwd.or_panic.resolve "reg_issue7379.fz.stdin"), nil] do
+  for stdin_file in [option (io.path.of "reg_issue7379.fz.stdin"), nil] do
     res := "sleep 1m".execute (container.ps_map String String).empty stdin_file (time.duration.s 1) .or_panic
 
     check !res.ok
