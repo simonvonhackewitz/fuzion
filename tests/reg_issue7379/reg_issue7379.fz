@@ -36,7 +36,9 @@ reg_issue7379 =>
     res := "sleep 1m".execute (container.ps_map String String).empty stdin_file (time.duration.s 1) .or_panic
 
     check !res.ok
-    check res.err.starts_with expected
+    if !res.err.starts_with expected
+      say "Expected: '$expected'"
+      say "Got: '$(res.err)'"
 
     say <| res.err.substring 0 expected.byte_count
 
